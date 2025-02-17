@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useCart } from '@/hooks/use-cart';
 import { formatPrice } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 // import { useToast } from '@/components/ui/use-toast';
 
 export default function CheckoutPage() {
@@ -26,9 +27,19 @@ export default function CheckoutPage() {
     }, 1500);
   };
 
+  // if (items.length === 0) {
+  //   router.push('/cart');
+  //   return null;
+  // }
+  useEffect(() => {
+    if (items.length === 0) {
+      router.push('/cart');
+    }
+  }, [items.length, router]); // Add dependency array
+
+  // Show loading state while redirecting
   if (items.length === 0) {
-    router.push('/cart');
-    return null;
+    return null; // Or a loading spinner
   }
 
   return (
